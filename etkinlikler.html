@@ -1,1 +1,62 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etkinlikler | Kampüs Kulübü</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="brand">Kampüs Kulübü</div><nav aria-label="Ana menü"><a href="index.html">Ana Sayfa</a>
+<a href="etkinlikler.html" aria-current="page">Etkinlikler</a>
+<a href="hakkimizda.html">Hakkımızda</a></nav></header>
+<main><p class="eyebrow">KAMPÜS KULÜBÜ</p><h1>Etkinlik takvimi</h1>
+<p class="intro">Birlikte öğrenmek ve üretmek için sıradaki buluşmalarımızı keşfet. Etkinlikler eğitim amacıyla hazırlanmış örnek kayıtlardır.</p>
+<label class="search-label" for="event-search">Etkinliklerde ara</label>
+<div class="search-controls">
+  <input class="search-input" id="event-search" type="search" placeholder="Atölye, tarih veya yer yazın" aria-describedby="search-status">
+  <button class="clear-button" id="clear-search" type="button">Temizle</button>
+</div>
+<p class="search-status" id="search-status" aria-live="polite">7 etkinlik listeleniyor.</p>
+<section class="grid" aria-label="Örnek etkinlikler">
+<article class="event-card"><p class="meta">12 KASIM / 14.00</p><h2>HTML Atölyesi</h2><p>Başlık, paragraf ve bağlantılarla ilk web sayfanı oluştur.</p><p>Yer: Bilgisayar Laboratuvarı</p></article>
+<article class="event-card"><p class="meta">19 KASIM / 14.00</p><h2>CSS Tasarım Saati</h2><p>Renkleri, boşlukları ve sayfa düzenini keşfet; kendi kart tasarımını hazırla.</p><p>Yer: Tasarım Stüdyosu</p></article>
+<article class="event-card"><p class="meta">26 KASIM / 14.00</p><h2>Copilot ile Kod Okuma</h2><p>Kodunu adım adım incele, küçük bir değişiklik yap ve sonucu birlikte dene.</p><p>Yer: Çevrim içi buluşma</p></article>
+<article class="event-card"><p class="meta">3 ARALIK / 14.00</p><h2>GitHub ile Proje Paylaşımı</h2><p>Dosyalarını düzenle, değişikliklerini kaydet ve ilk web projenin bağlantısını paylaş.</p><p>Yer: Bilgisayar Laboratuvarı</p></article>
+<article class="event-card"><p class="meta">10 ARALIK / 14.00</p><h2>Erişilebilir Web Buluşması</h2><p>Herkesin kullanabileceği sayfalar için anlamlı HTML ve klavye gezinmesini dene.</p><p>Yer: Kütüphane Grup Çalışma Salonu</p></article>
+<article class="event-card"><p class="meta">2 OCAK / 14.00</p><h2>Yapay Zekâ Atölyesi</h2><p>Yapay zekâ araçlarının nasıl çalıştığını keşfet, örnek uygulamaları incele ve sonuçları eleştirel biçimde değerlendirmeyi öğren.</p><p>Yer: Bilgisayar Laboratuvarı</p></article>
+<article class="event-card"><p class="meta">9 ŞUBAT / 14.00</p><h2>Siber Güvenlik Atölyesi</h2><p>Güçlü parola oluşturma, çok adımlı doğrulama ve oltalama mesajlarını tanıma gibi temel dijital güvenlik alışkanlıklarını öğren.</p><p>Yer: Bilgisayar Laboratuvarı</p></article>
+</section>
+<p class="note" id="no-results" hidden>Aramanızla eşleşen etkinlik bulunamadı. Başka bir kelime deneyin.</p>
+<p class="note">Etkinlik kayıtları HTML dosyasındadır. Arama bu sayfada, tarayıcıda JavaScript ile çalışır.</p></main>
+<footer>BPR201 - İnternet Tabanlı Programlama / Eğitim amaçlı örnek proje</footer>
+<script>
+const searchInput = document.querySelector("#event-search");
+const eventCards = [...document.querySelectorAll(".event-card")];
+const searchStatus = document.querySelector("#search-status");
+const noResults = document.querySelector("#no-results");
+const clearButton = document.querySelector("#clear-search");
 
+function filterEvents() {
+  const query = searchInput.value.trim().toLocaleLowerCase("tr");
+  let visibleCount = 0;
+
+  for (const card of eventCards) {
+    const matches = card.textContent.toLocaleLowerCase("tr").includes(query);
+    card.hidden = !matches;
+    if (matches) visibleCount++;
+  }
+
+  searchStatus.textContent = `${visibleCount} etkinlik listeleniyor.`;
+  noResults.hidden = visibleCount > 0;
+}
+
+searchInput.addEventListener("input", filterEvents);
+clearButton.addEventListener("click", () => {
+  searchInput.value = "";
+  filterEvents();
+  searchInput.focus();
+});
+</script>
+</body>
+</html>
